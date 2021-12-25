@@ -16,16 +16,6 @@ public class Main {
         System.out.println();
         System.out.println("_________________");
 
-        //validation of double
-//        System.out.println("Ask if it is a double or an int");
-//        Double askFor = startPlay.nextDouble();
-//        if(askFor%1 == 0){
-//            System.out.println(askFor);
-//        }else{
-//            System.out.println(askFor%1);
-//        }
-//        prompt users to play
-//        checks if user entered play
         while (game == false){
             System.out.println("Please type \"play\":" + "\t");
             String startGame = startPlay.next();
@@ -192,7 +182,7 @@ public class Main {
         String PlayerShipSymb ="@";
         String sea = space;
 
-       String [][] emptyfornow = new String[boardLength][boardLength];
+        String [][] emptyfornow = new String[boardLength][boardLength];
         for (int i = 0; i< emptyfornow.length; i++){
             for(int j = 0; j <emptyfornow[i].length;j++){
                 emptyfornow[i][j] = sea;
@@ -317,24 +307,36 @@ public class Main {
         int[] Coordinates = new int [2];
         for (int coordx = 0; coordx<Coordinates.length; coordx++){
             System.out.println("Enter your X coordinate for your " + (deployed +1) + " ship: ");
-            int coordscanx = playercoordinates.nextInt();
-
-            if(coordscanx<0 || coordscanx>9){
-                System.out.println("enter a valid coordinate");
-            }else{
-                Coordinates[0] = coordscanx;
-
-                //proceeds to y
-                System.out.println("Enter your Y coordinate for your " +(deployed +1)+" ship: ");
-                int coordscany = playercoordinates.nextInt();
-                if(coordscany <0 || coordscany >9){
+            if (playercoordinates.hasNextInt()){
+                int coordscanx = playercoordinates.nextInt();
+                if((coordscanx<0 || coordscanx>9)){
                     System.out.println("enter a valid coordinate");
                 }else{
-                    Coordinates[1] = coordscany;
-                    return Coordinates;
+                    Coordinates[0] = coordscanx;
+                    //proceeds to y
+                    System.out.println("Enter your Y coordinate for your " +(deployed +1)+" ship: ");
+
+                    if(playercoordinates.hasNextInt()){
+                        int coordscany = playercoordinates.nextInt();
+                        if(coordscany <0 || coordscany >9){
+                            System.out.println("enter a valid coordinate");
+                        }else{
+                            Coordinates[1] = coordscany;
+                            return Coordinates;
+                        }
+
+                    }else{
+                        System.out.println("enter a valid response");
+                        return playerCoordinate(deployed);
+                    }
                 }
+            }else{
+                System.out.println("enter a valid response");
+                return playerCoordinate(deployed);
             }
+
         }
+
 
         return playerCoordinate(deployed);
     }
@@ -381,6 +383,7 @@ public class Main {
             //it displays map depending on how many symbols are present.
 
             //should only display once.
+            System.out.println("YOUR TURN");
             int [] playerGuess = playerGuessCoords(length);
             int PguessX = playerGuess[0];
             int PguessY = playerGuess[1];
@@ -469,13 +472,13 @@ public class Main {
                 System.out.println();
             }
 
-                if(MaxCompShip == 0){
-                    System.out.println("Well done commander! You won.");
-                    GameProgress = false;
-                }else if(MaxPlayerShip == 0){
-                    System.out.println("The enemy won the battle. We'll get them next time!");
-                    GameProgress = false;
-                }
+            if(MaxCompShip == 0){
+                System.out.println("Well done commander! You won.");
+                GameProgress = false;
+            }else if(MaxPlayerShip == 0){
+                System.out.println("The enemy won the battle. We'll get them next time!");
+                GameProgress = false;
+            }
 //            System.out.println(MaxPlayerShip);
         }
     }
@@ -485,17 +488,17 @@ public class Main {
 
         for (int row = 0; row < playermapUpdate.length; row++){
             for(int col = 0; col < playermapUpdate[row].length; col++){
-               if(playermapUpdate[row][col].equals("1")){
-                   GUI[row][col] ="@";
-               }else if (playermapUpdate[row][col].equals("2")){
-                   GUI[row][col] =space;
-               }else if(playermapUpdate[row][col].equals("!")){
-                   GUI[row][col] = "!";
-               }else if(playermapUpdate[row][col].equals("x")){
-                   GUI[row][col] = "x";
-               }else if(playermapUpdate[row][col].equals("-")){
-                   GUI[row][col] = "-";
-               }
+                if(playermapUpdate[row][col].equals("1")){
+                    GUI[row][col] ="@";
+                }else if (playermapUpdate[row][col].equals("2")){
+                    GUI[row][col] =space;
+                }else if(playermapUpdate[row][col].equals("!")){
+                    GUI[row][col] = "!";
+                }else if(playermapUpdate[row][col].equals("x")){
+                    GUI[row][col] = "x";
+                }else if(playermapUpdate[row][col].equals("-")){
+                    GUI[row][col] = "-";
+                }
 
             }
         }
@@ -557,30 +560,41 @@ public class Main {
                 }
             }
         }
-       //placing the guessed coordinate inside the new map
+        //placing the guessed coordinate inside the new map
 
         return updateMap(lengthBoard, Guess, systemLogs, playerGotHit, computerGotHit, missed);
     }
     private static int[] playerGuessCoords(int length) {
         Scanner playerGuess = new Scanner(System.in);
         int [] coordinates = new int [2];
-        System.out.println("YOUR TURN");
+
         for (int i  =0; i< coordinates.length; i++){
 
             System.out.println("Enter a X coordinate");
-            int playerGuessX = playerGuess.nextInt();
-            if(playerGuessX<0 || playerGuessX>9){
-                System.out.println("please enter a valid coordinate");
-            }else{
-                coordinates[0] = playerGuessX;
-                System.out.println("Enter a Y coordinate");
-                int playerGuessY = playerGuess.nextInt();
-                if(playerGuessY < 0 || playerGuessY >9){
+            if(playerGuess.hasNextInt()){
+                int playerGuessX = playerGuess.nextInt();
+                if(playerGuessX<0 || playerGuessX>9){
                     System.out.println("please enter a valid coordinate");
                 }else{
-                    coordinates[1] = playerGuessY;
-                    return coordinates;
+                    coordinates[0] = playerGuessX;
+                    System.out.println("Enter a Y coordinate");
+                    if(playerGuess.hasNextInt()){
+                        int playerGuessY = playerGuess.nextInt();
+                        if(playerGuessY < 0 || playerGuessY >9){
+                            System.out.println("please enter a valid coordinate");
+                        }else{
+                            coordinates[1] = playerGuessY;
+                            return coordinates;
+                        }
+                    }else{
+                        System.out.println("enter a valid number");
+                        return playerGuessCoords(length);
+                    }
+
                 }
+            }else{
+                System.out.println("enter a valid number");
+                return playerGuessCoords(length);
             }
 
         }

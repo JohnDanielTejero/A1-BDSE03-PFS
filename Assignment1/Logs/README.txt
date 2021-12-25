@@ -222,6 +222,11 @@ C.) Battle Phase
 3. GUI updates added and implemented
 4. Overall functionality is done.
 
+/* December 25, 2021*/
+1. made a simple validator.
+2. every input gets filtered out unless it is a valid number.
+
+
 
 TO DO List for December 24, 2021:
 1. --Identify the error-- done
