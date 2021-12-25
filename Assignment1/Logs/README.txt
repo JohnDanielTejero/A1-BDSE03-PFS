@@ -235,3 +235,58 @@ TO DO List for December 24, 2021:
 4. --Make the System Interface Invisible-- done
 
 
+
+/* FEATURES FOR THE BATTLESHIP GAME*/
+
+**Mechanics
+
+There are three phases: 
+A.) Main Menu Phase
+B.) Setup Phase
+C.) Battle Phase
+
+MAIN MENU
+1. ) Preview of the battleship game is displayed
+2. ) Player is prompt to type play to start
+3. ) Invalid response will not direct you to the game
+
+SETUP PHASE
+1. ) Generate a 2d grid 10x10 and name as Logs for now
+2. ) Generate Ships
+
+	A. ) Player Phase
+		1. ) Prompts the user for x and y coordinate.
+		2. ) Checks if the given coordinates are valid: should be a whole number, and should be between 0 - 9
+		3. ) If required coordinates are not met, they are directed back to prompt
+		4. ) If the coordinates entered are valid, the entries are checked in the grid array if that specified slot is taken
+		5. ) If taken already, they are then asked again to enter a new coordinates.
+		6. ) If the specified slot is available, the slot is marked as "1".
+		7. ) Prompt will be repeating 5x until all ships are placed.
+
+	B. ) Computer Phase
+		1. ) Randomly generates x and y coordinate.
+		2. ) If the generated x and y coordinate is taken in the 2d array, proceeds to generate new coordinate
+		3. ) If the generated coordinate is available, the slot is marked as "2"
+		4. ) Repeat all until 5 ships are placed.
+		
+3. ) Create a copy of 2d grid and name as GUI for now. 
+4. ) While copying using a for loop, there's an if statement which checks if there's 1 and 2 inside the Logs 2d array.
+5. ) all 1 will be changed to "@"
+6. ) all 2 will be changed to " "
+7. ) Display the map with GUI as parameter
+
+BATTLE PHASE
+1. ) Make a copy of 2d logs and name it as validator for now
+2. ) Stores the count of placed ships for both computers and players
+3. ) Loop the following until either ships reaches the count of 0
+	a. ) prompts the user to input x and y coordinates for guessing
+	b. ) if the input is in invalid format, they are prompted again
+	c. ) if the input is valid, checks whether it is within the range of 0 - 9
+	d. ) if the input is not within the range, the user is asked to input new coordinate.
+	e. ) checks the log array whether the user hits a 1 or a 2 or a blank area.
+	f. ) player ship will be marked as x, computer ship will be marked as !, and blanked area will be marked as - depending on what the coordinates users have input.
+	g. ) the logs which will have the changes, will be compared to validator, if the logs has x and its counterpart in validator is 1, displays a message saying your 		ship is hit and changes the validator's 1 to x(only specific coordinate), if logs has ! and its counterpart is 2, displays a message that states an enemy ship is hit 		and marks the validator's 2 to !(only specific coordinate). If logs has - and its counterpart has a blank space, displays a missed message and change the blank of  		 the said coordinate to "-". If the specified x and y of the logs matches the specified x and y of the validator, displays a message that the area is already 		     revealed.
+	h. ) GUI then copies the validator, if 1 is displayed, it gets changed to "@" and 2 will be a blank space. the x ,! , and - will be retained.
+	i. ) the GUI is updated and is passed to map as parameter
+	j. ) Computer generates x and y coordinates.
+	k. ) repeat e - j
