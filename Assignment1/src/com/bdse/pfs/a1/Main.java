@@ -296,7 +296,6 @@ public class Main {
             int randY =randomcoords.nextInt(10);
             Coordinates[1] = randY;
 
-
         }
 
         return Coordinates;
