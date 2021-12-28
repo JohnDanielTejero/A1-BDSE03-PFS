@@ -125,7 +125,7 @@ public class Main {
         System.out.println("**Welcome to Battleship Game**");
         System.out.println("******************************");
         System.out.println();
-        String [][] InnerDisplay = Seaobjects;
+        String [][] Display = Seaobjects;
         //sea map
         for (int row = 0; row < 12; row++){
             //if the row = 0 then no display
@@ -154,7 +154,7 @@ public class Main {
 
                     //adds space inside to fill the emptiness chour
 //                    System.out.println(space);
-                    System.out.print(InnerDisplay[row-1][col]);
+                    System.out.print(Display[row-1][col]);
                 }
 
 
@@ -195,7 +195,7 @@ public class Main {
 
         //2 phases, setup and attack
         //return setup phase later in a variable where map can be displayed.
-        String [][] InnerDisplay = setupPhase(boardLength, sea, PlayerMaxShip, ComputerMaxShip,PlayerShipSymb);
+        String [][] InnerDisplay = setupPhase(boardLength, sea, PlayerMaxShip, ComputerMaxShip);
         String[][] GridDisplayer = new String[boardLength][boardLength];
 
         for(int row = 0; row < InnerDisplay.length; row++){
@@ -206,9 +206,9 @@ public class Main {
 
         for (int row = 0; row < GridDisplayer.length; row++){
             for(int col = 0; col< GridDisplayer[row].length; col++){
-                if(GridDisplayer[row][col] == "1"){
+                if(GridDisplayer[row][col].equals("1")){
                     GridDisplayer[row][col] = PlayerShipSymb;
-                }else if(GridDisplayer[row][col]=="2"){
+                }else if(GridDisplayer[row][col].equals("2")){
                     GridDisplayer[row][col] = sea;
                 }
             }
@@ -220,22 +220,21 @@ public class Main {
 
 
     //setup phase
-    private static String [][] setupPhase(int boardLength, String sea, int playerMaxShip, int computerMaxShip, String playerShipSymb) {
+    private static String [][] setupPhase(int boardLength, String sea, int playerMaxShip, int computerMaxShip) {
 
-        String [][] InnerDisplay = gridMap(boardLength, sea, playerMaxShip, computerMaxShip, playerShipSymb);
+        String [][] InnerDisplaysetup = gridMap(boardLength, sea, playerMaxShip, computerMaxShip);
 
-        return InnerDisplay;
+        return InnerDisplaysetup;
     }
-    public static String[][] gridMap(int boardLength,String sea, int playerShips, int computerShips, String Shipsdeployed){
+    public static String[][] gridMap(int boardLength,String sea, int playerShips, int computerShips){
 
         int gridSize = boardLength;
         int playerShipsDeployed = 0;
         int computerShipsDeployed = 0;
-        String playersymbol = Shipsdeployed;
         int maxDeploy =playerShips;
         int compMaxdeploy = computerShips;
 
-        String [][] InnerDisplay = new String [boardLength][boardLength];
+        String [][] InnerDisplay = new String [gridSize][gridSize];
         for (int i = 0; i< InnerDisplay.length; i++){
             for(int j = 0; j <InnerDisplay[i].length;j++){
                 InnerDisplay[i][j] = sea;
@@ -268,7 +267,7 @@ public class Main {
 
         while(computerShipsDeployed< compMaxdeploy){
 
-            int[] computerlocations = compcoordinate(computerShipsDeployed);
+            int[] computerlocations = compcoordinate();
             int x = computerlocations[0];
             int y = computerlocations[1];
 
@@ -282,8 +281,8 @@ public class Main {
         }
         return InnerDisplay;
     }
-    private static int[] compcoordinate(int computerShipsDeployed) {
-        Scanner CompCoords = new Scanner(System.in);
+    private static int[] compcoordinate() {
+
         Random randomcoords = new Random();
         int[]Coordinates = new int[2];
         for(int coords = 0; coords < Coordinates.length; coords++){
@@ -295,6 +294,7 @@ public class Main {
             //y deploying
             int randY =randomcoords.nextInt(10);
             Coordinates[1] = randY;
+
 
         }
 
@@ -383,10 +383,10 @@ public class Main {
 
             //should only display once.
             System.out.println("YOUR TURN");
-            int [] playerGuess = playerGuessCoords(length);
+            int [] playerGuess = playerGuessCoords();
             int PguessX = playerGuess[0];
             int PguessY = playerGuess[1];
-            String [][] playermapUpdate = updateMap(lengthBoard, playerGuess,SystemLogs,PlayerGotHit, ComputerGotHit, Missed);
+            String [][] playermapUpdate = updateMap(playerGuess,SystemLogs,PlayerGotHit, ComputerGotHit, Missed);
             String [][] GUIupdate = GuiMap(playermapUpdate,GUIdisplay);
             System.out.println("\n\n\n");
             System.out.println("_____________________________");
@@ -428,10 +428,10 @@ public class Main {
                 System.out.println();
             }
 
-            int [] compGuess = computerTurn(length);
+            int [] compGuess = computerTurn();
             int CguessX = compGuess[0];
             int CguessY = compGuess[1];
-            String [][] compmapUpdate = updateMap(lengthBoard, compGuess,SystemLogs,PlayerGotHit, ComputerGotHit, Missed);
+            String [][] compmapUpdate = updateMap(compGuess,SystemLogs,PlayerGotHit, ComputerGotHit, Missed);
             System.out.println("\n\n\n");
             System.out.println("_____________________________");
             System.out.println("*************Turn " + Round + "**********");
@@ -505,7 +505,7 @@ public class Main {
         return GUI;
     }
 
-    private static int[] computerTurn(int length) {
+    private static int[] computerTurn() {
         Random computerGuess = new Random();
         int [] coordinates = new int [2];
         System.out.println("COMPUTER'S TURN");
@@ -528,11 +528,9 @@ public class Main {
 
 
         }
-        return computerTurn(length);
+        return computerTurn();
     }
-    private static String[][]updateMap(int lengthBoard, int[] Guess, String[][] systemLogs, String playerGotHit, String computerGotHit, String missed) {
-
-        int grid = lengthBoard;
+    private static String[][]updateMap(int[] Guess, String[][] systemLogs, String playerGotHit, String computerGotHit, String missed) {
 
         int GuessX = Guess[0];
         int GuessY = Guess[1];
@@ -549,10 +547,10 @@ public class Main {
                     systemBoard[GuessX][GuessY] = Missed;
                     return systemBoard;
                 }else if (systemBoard[GuessX][GuessY].equals("1")){
-                    systemBoard[GuessX][GuessY] = playerGotHit;
+                    systemBoard[GuessX][GuessY] = playerHit;
                     return systemBoard;
                 }else if(systemBoard[GuessX][GuessY].equals("2")){
-                    systemBoard[GuessX][GuessY] = computerGotHit;
+                    systemBoard[GuessX][GuessY] = CompHit;
                     return systemBoard;
                 }else if(systemBoard[GuessX][GuessY].equals("x")|| systemBoard[GuessX][GuessY].equals("-") || systemBoard[GuessX][GuessY].equals("!")){
                     return systemBoard;
@@ -561,9 +559,9 @@ public class Main {
         }
         //placing the guessed coordinate inside the new map
 
-        return updateMap(lengthBoard, Guess, systemLogs, playerGotHit, computerGotHit, missed);
+        return updateMap(Guess, systemLogs, playerGotHit, computerGotHit, missed);
     }
-    private static int[] playerGuessCoords(int length) {
+    private static int[] playerGuessCoords() {
         Scanner playerGuess = new Scanner(System.in);
         int [] coordinates = new int [2];
 
@@ -587,17 +585,17 @@ public class Main {
                         }
                     }else{
                         System.out.println("enter a valid number");
-                        return playerGuessCoords(length);
+                        return playerGuessCoords();
                     }
 
                 }
             }else{
                 System.out.println("enter a valid number");
-                return playerGuessCoords(length);
+                return playerGuessCoords();
             }
 
         }
-        return playerGuessCoords(length);
+        return playerGuessCoords();
     }
 
     /*end of code*/

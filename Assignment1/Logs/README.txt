@@ -4,90 +4,8 @@
 
 /*Pseudocodes*/
 
-//ma'am jey's pseudocode which I'll use as guide
-Step 1: Print Map
-	1. Declare the map 10 x 10
-		=> Two dimensional array
-		?  What is the data type?
-		=> 1-player, 2-computer, !, x, -
-		=> Character Array or String Array
-		? Why character
-		=> Because we re going to store the single character
 
-	2. Print the welcome message
-
-	3. Print the column index (0-9)
-		=> Range - Repeating the same => Loop
-		? Which loop? For / do while / while/ for each
-		=> Continious numbers - index incremented one by one
-		=> for loop for column index
-
-	4. Print the row index (0|spaces|0)
-	5. Repeat the step 4 for index 0 to 9
-		=> Nested loop - Row, Col
-		=> for each row
-			for each column
-				print rowindex| spaces |rowindex
-	6. Print step 3
-		=> Clue to create the step 3 as a method. So that, it can be called at
-		   any part of the program
-
-
-Step 2: Deploy Player ships
-	1 - Player Ship => Should be represented as @
-Initialize the player's ship count = 1
-While (player's ship count <= 5)
-	1. Prompt the user for x co-ordinate
-
-	Steps 2 & 3 must be executed atleast once
-		1. Valid Entry - Only once
-		2. Invalid Entry - Repeated until the valid entry
-		=> do ... while
-	do - while (true)
-	2. Get x co-ordinate input
-	3. if x co-ordinate is between 0 and 9 goto step 4
-	    else goto step 2 => Shouln't reprompt the message until the user enter the valid co-ordinate
-	while (0 >= x co-ordinate <=9)
-
-	4. Prompt the user for y co-ordinate
-
-	do
-	5. Get y co-ordinate input
-	6. if y co-ordinate is between 0 and 9 goto step 7
-	    else goto step 5 => Shouln't reprompt the message until the user enter the valid co-ordinate
-	while (0 >= x co-ordinate <=9)
-
-	7. If the location is free
-		deploy the ship
-		Increment the the player's ship count by 1
-	   else
-		goto step 1	=> Loop
-	8. Repeat the steps from 1 to 7 for 5 ships => Loop
-
-	9. Execute Print Map  method
-
-Step 3: Deploy Computer Ships
-	2 - Computer Ship => Don't display anything
-
-Step 4:Battle
-	Player Turn
-		- - Missed target
-		! - Sunk computer's ship
-		x - Sunk Player's ship
-
-	Computer Turn
-		! - Sunk computer's ship
-		x - Sunk Player's ship
- 		 - Computer Missed
-
-Step 5: Declare the result
-	if computer ships = 0 then
-		Display "Player Won the match"
-	else
-		Display "Computer Won the match"
-
-
-//my pseudocodes based on ma'am jey's with a bit of tweaks
+//my pseudocodes
 
 There are Three Phases
 
@@ -226,6 +144,9 @@ C.) Battle Phase
 1. made a simple validator.
 2. every input gets filtered out unless it is a valid number.
 
+/*December 28, 2021*/
+1. Removed unnecessary variables 
+2. Removed unnecessary comments/codes
 
 
 TO DO List for December 24, 2021:
@@ -233,7 +154,6 @@ TO DO List for December 24, 2021:
 2. --Fix the error--      done
 3. --Make the GUI visible-- done
 4. --Make the System Interface Invisible-- done
-
 
 
 /* FEATURES FOR THE BATTLESHIP GAME*/
@@ -285,7 +205,7 @@ BATTLE PHASE
 	d. ) if the input is not within the range, the user is asked to input new coordinate.
 	e. ) checks the log array whether the user hits a 1 or a 2 or a blank area.
 	f. ) player ship will be marked as x, computer ship will be marked as !, and blanked area will be marked as - depending on what the coordinates users have input.
-	g. ) the logs which will have the changes, will be compared to validator, if the logs has x and its counterpart in validator is 1, displays a message saying your 		ship is hit and changes the validator's 1 to x(only specific coordinate), if logs has ! and its counterpart is 2, displays a message that states an enemy ship is hit 		and marks the validator's 2 to !(only specific coordinate). If logs has - and its counterpart has a blank space, displays a missed message and change the blank of  		 the said coordinate to "-". If the specified x and y of the logs matches the specified x and y of the validator, displays a message that the area is already 		     revealed.
+	g. ) the logs which will have the changes, will be compared to validator, if the logs has x and its counterpart in validator is 1, displays a message saying your ship is hit and changes the validator's 1 to x(only specific coordinate), if logs has ! and its counterpart is 2, displays a message that states an enemy ship is hit and marks the validator's 2 to !(only specific coordinate). If logs has - and its counterpart has a blank space, displays a missed message and change the blank of the said coordinate to "-". If the specified x and y of the logs matches the specified x and y of the validator, displays a message that the area is already revealed.
 	h. ) GUI then copies the validator, if 1 is displayed, it gets changed to "@" and 2 will be a blank space. the x ,! , and - will be retained.
 	i. ) the GUI is updated and is passed to map as parameter
 	j. ) Computer generates x and y coordinates.
